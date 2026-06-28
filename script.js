@@ -37,4 +37,3 @@ reveals[i].classList.add("active");
 }
 
 window.addEventListener("scroll",revealSections);
-
