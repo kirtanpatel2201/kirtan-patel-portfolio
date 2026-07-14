@@ -15,25 +15,24 @@ setTimeout(typeText,10);
 window.addEventListener("load",typeText);
 
 
-/* SCROLL REVEAL */
+/* SCROLL REVEAL (IntersectionObserver) */
 
-function revealSections(){
+const revealOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.15
+};
 
-const reveals=document.querySelectorAll(".reveal");
+const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Optional: unobserve if you only want it to animate once
+            // observer.unobserve(entry.target); 
+        }
+    });
+}, revealOptions);
 
-for(let i=0;i<reveals.length;i++){
-
-let windowHeight=window.innerHeight;
-let elementTop=reveals[i].getBoundingClientRect().top;
-
-let revealPoint=120;
-
-if(elementTop < windowHeight - revealPoint){
-reveals[i].classList.add("active");
-}
-
-}
-
-}
-
-window.addEventListener("scroll",revealSections);
+document.querySelectorAll('.reveal').forEach(section => {
+    observer.observe(section);
+});
